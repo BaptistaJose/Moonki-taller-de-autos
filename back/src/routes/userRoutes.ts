@@ -1,20 +1,13 @@
 import { Router } from "express";
+import { createUserController, getUserByIdController, getUserController, loginUserController } from "../controllers/userController";
 const userRoutes: Router = Router();
 
-userRoutes.get('/', (req,res)=>{
-    res.status(200).send("Obtener usuarios");
-})
+userRoutes.get('/', getUserController)
 
-userRoutes.get('/:id', (req,res)=>{
-    res.status(200).send("Obtener usuario por id")
-})
+userRoutes.get('/:id', getUserByIdController)
 
-userRoutes.post("/resgiter", (req,res)=>{
-    res.status(201).send("Crear usuario")
-})
+userRoutes.post("/register", createUserController)
 
-userRoutes.post("/login", (req,res)=>{
-    res.send("Login del usuario a la aplicación")
-})
+userRoutes.post("/login", loginUserController)
 
 export default userRoutes
