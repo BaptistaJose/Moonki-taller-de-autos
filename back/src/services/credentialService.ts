@@ -1,41 +1,19 @@
-import ICredential from "../interfaces/ICredential";
+import { AppDataSource } from "../config/data-source";
+import ICredentialDto from "../dto/ICredentialDto";
+import { Credential } from "../entities/Credential";
 
-let arrCredential: ICredential[] = [
-        {
-        id: 1,
-        username: "usuario1",
-        password: "pass123"
-    },
-    {
-        id: 2,
-        username: "usuario2",
-        password: "pass456"
-    },
-    {
-        id: 3,
-        username: "usuario3",
-        password: "pass789"
-    }
-];
 
- let id: number = 4;
-
- export const idCredentialService = async (username: string, password: string): Promise<ICredential["id"]> =>{
-    const newCredential: ICredential = {
-        id,
-        username,
-        password
-    };
-
-    arrCredential.push(newCredential);
-    id++;
-
-    return newCredential.id;
+ export const idCredentialService = async (CredentialDto: ICredentialDto): Promise<Credential["id"]> =>{
+    
+    const newCredential = await AppDataSource.getRepository(Credential).create(CredentialDto);
+    const result = await AppDataSource.getRepository(Credential).save(newCredential);
+    return result.id
+    
 };
 
-export const credentialService = async (username: string, password: string): Promise<ICredential["id"]> =>{
+export const credentialService = async (CredentialDto: ICredentialDto): Promise<Credential["id"]> =>{
 
-   let credentialCheck =  arrCredential.find((ele) => ele.username === username && ele.password === password)
+   let credentialCheck = await AppDataSource.getRepository(Credential).findOneBy(CredentialDto)
 
        if (!credentialCheck) throw new Error("Credenciales incorrectas");
     
@@ -43,7 +21,3 @@ export const credentialService = async (username: string, password: string): Pro
 
 }
 
-/*Implementar una función que recibirá username y password, 
-y deberá chequear si el nombre de usuario existe entre los datos disponibles y, si es así, 
-si el password es correcto. En caso de que la validación sea exitosa, deberá retornar el ID de las credenciales. 
-*/

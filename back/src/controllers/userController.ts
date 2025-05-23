@@ -1,11 +1,11 @@
 import { Request, Response } from "express"
-import IUser from "../interfaces/IUser"
 import { createUSerService, getUserByIdService, getUserService } from "../services/userService"
 import { credentialService } from "../services/credentialService";
+import { User } from "../entities/User";
 
 export const getUserController = async (req: Request, res: Response) =>{
     try {
-        const arrUsers: IUser[] = await getUserService();
+        const arrUsers: User[] = await getUserService();
         res.status(200).json(arrUsers);
     } catch (err: any) {
         res.status(500).json({
@@ -17,7 +17,7 @@ export const getUserController = async (req: Request, res: Response) =>{
 export const getUserByIdController = async (req: Request, res: Response) =>{
     try {
         const {id} = req.params;
-        const user: IUser = await getUserByIdService(Number(id));
+        const user: User = await getUserByIdService(Number(id));
         res.status(200).json(user);
         
     } catch (error: any) {
@@ -31,7 +31,7 @@ export const getUserByIdController = async (req: Request, res: Response) =>{
 export const createUserController = async (req:Request, res: Response) =>{
     try {
         const {name, email, birthdate, nDni, username, password} = req.body;
-        const newUSer: IUser = await createUSerService({name, email, birthdate, nDni, username, password});
+        const newUSer: User = await createUSerService({name, email, birthdate, nDni, username, password});
         res.status(201).json(newUSer);
     } catch (error: any) {
         res.status(400).json({
@@ -43,7 +43,7 @@ export const createUserController = async (req:Request, res: Response) =>{
 export const loginUserController = async (req: Request, res: Response)=>{
     try {
         const {username, password} = req.body;
-        const userLogin = await credentialService(username, password);
+        const userLogin = await credentialService({username, password});
         res.status(200).json(userLogin)
     } catch (error: any) {
         res.status(400).json({
