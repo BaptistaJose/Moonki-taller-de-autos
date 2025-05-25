@@ -7,7 +7,7 @@ export const getAppointmentController = async (req: Request, res: Response) =>{
         const appointment: IAppointment[] = await getAppointmentServices();
         res.status(200).json(appointment)
     } catch (error: any) {
-        res.status(500).json({
+        res.status(404).json({
             message: error.message
         })
     }
@@ -19,7 +19,7 @@ export const getAppointmentByIdController = async (req: Request, res: Response) 
         const appointmentId: IAppointment = await getAppointmentByIdService(Number(id));
         res.status(200).json(appointmentId);
     } catch (error: any) {
-        res.status(400).json({
+        res.status(404).json({
             message: error.message
         })
     }
@@ -39,11 +39,11 @@ export const createAppointmentController = async (req: Request, res: Response) =
 
 export const cancelAppointmentController = async (req: Request, res: Response) =>{
     try {
-        const {id} = req.body;
-        const cancelAppointment: IAppointment["id"] = await statusAppointmentService(id);
+        const {id} = req.params;
+        const cancelAppointment: IAppointment["id"] = await statusAppointmentService(Number(id));
         res.status(200).json(cancelAppointment)
     } catch (error: any) {
-        res.status(400).json({
+        res.status(404).json({
             message: error.message
         })
     }

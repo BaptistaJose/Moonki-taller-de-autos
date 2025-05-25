@@ -10,14 +10,17 @@ export const getUserService = async (): Promise<User[]> =>{
 
 export const getUserByIdService = async (id: number): Promise<User> =>{
 
-    let userById = await AppDataSource.getRepository(User).findOneBy({id})
+    let userById = await AppDataSource.getRepository(User).findOne({
+        where: {id},
+        relations: ['appointment']
+    })
     if(!userById) throw new Error("El usuario no existe");
     return userById;
 };
 
 export const createUSerService = async (IUserDto: IUserDto) =>{
     
-    if (!IUserDto.name || !IUserDto.email || !IUserDto.username || !IUserDto.password) {
+    if (!IUserDto.name || !IUserDto.email || !IUserDto.username || !IUserDto.password || !IUserDto.birthdate || !IUserDto.nDni) {
     throw new Error("Faltan datos obligatorios para crear el usuario");
 }
     
@@ -28,7 +31,7 @@ export const createUSerService = async (IUserDto: IUserDto) =>{
 
       const newUSer= {
         ...IUserDto,
-         credentialsId: {id: newcredentialsId}
+         credentials: {id: newcredentialsId}
       }
       
     const user: User = await AppDataSource.getRepository(User).create(newUSer)
@@ -36,4 +39,10 @@ export const createUSerService = async (IUserDto: IUserDto) =>{
 
 
     return result;
+}
+
+export const userResponseService = async (id:number): Promise<User> =>{
+    const userFound = await AppDataSource.getRepository(User).findOneBy({id})
+    if(!userFound) throw Error("Usuario no encontrado")
+    return userFound;
 }

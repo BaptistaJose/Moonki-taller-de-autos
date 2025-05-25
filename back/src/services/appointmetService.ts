@@ -17,7 +17,15 @@ export const  getAppointmentByIdService = async (id: number): Promise<Appointmen
 }
 
 export const createAppointmentService = async (appointmentDto: IAppointmentDto): Promise<Appointment> =>{
- const appointment = await AppDataSource.getRepository(Appointment).create(appointmentDto);
+    if(!appointmentDto.date || !appointmentDto.time) throw new Error("Los datos para el turno deben estar completados");
+    
+
+ const newAppointment ={
+    ...appointmentDto,
+    status: appointmentDto.status ?? "Active"
+ }
+
+ const appointment = await AppDataSource.getRepository(Appointment).create(newAppointment);
  const result =  await AppDataSource.getRepository(Appointment).save(appointment);
  return result;
 }
@@ -28,5 +36,7 @@ export const statusAppointmentService = async (id: number): Promise<Appointment[
     if(!appointmentId) throw new Error("El turno no existe"); 
 
     appointmentId.status = "Cancelled"
+    await AppDataSource.getRepository(Appointment).save(appointmentId);
+    
     return appointmentId.id
 }

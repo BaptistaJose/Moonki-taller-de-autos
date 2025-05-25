@@ -13,11 +13,11 @@ import { Credential } from "../entities/Credential";
 
 export const credentialService = async (CredentialDto: ICredentialDto): Promise<Credential["id"]> =>{
 
-   let credentialCheck = await AppDataSource.getRepository(Credential).findOneBy(CredentialDto)
+   let credentialFound = await AppDataSource.getRepository(Credential).findOneBy(CredentialDto)
 
-       if (!credentialCheck) throw new Error("Credenciales incorrectas");
-    
-   return credentialCheck.id
-
+       if (!credentialFound) throw new Error("Credenciales incorrectas");
+  
+     return credentialFound.id
+   
 }
 

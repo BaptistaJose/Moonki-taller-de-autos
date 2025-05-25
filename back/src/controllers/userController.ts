@@ -1,5 +1,5 @@
 import { Request, Response } from "express"
-import { createUSerService, getUserByIdService, getUserService } from "../services/userService"
+import { createUSerService, getUserByIdService, getUserService, userResponseService } from "../services/userService"
 import { credentialService } from "../services/credentialService";
 import { User } from "../entities/User";
 
@@ -8,7 +8,7 @@ export const getUserController = async (req: Request, res: Response) =>{
         const arrUsers: User[] = await getUserService();
         res.status(200).json(arrUsers);
     } catch (err: any) {
-        res.status(500).json({
+        res.status(404).json({
             message: err.message
         })
     }
@@ -21,7 +21,7 @@ export const getUserByIdController = async (req: Request, res: Response) =>{
         res.status(200).json(user);
         
     } catch (error: any) {
-        res.status(400).json({
+        res.status(404).json({
             message: error.message
         })
     }
@@ -44,9 +44,14 @@ export const loginUserController = async (req: Request, res: Response)=>{
     try {
         const {username, password} = req.body;
         const userLogin = await credentialService({username, password});
-        res.status(200).json(userLogin)
+        const user = await userResponseService(userLogin)
+        res.status(200).json({
+            login: true,
+            user
+        })
     } catch (error: any) {
         res.status(400).json({
+            login: false,
             message: error.message
         })
     }
