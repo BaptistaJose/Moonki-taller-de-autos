@@ -1,0 +1,23 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    min-height: 100vh;
+    background: linear-gradient(
+        rgba(0,0,0,0.4), 
+        rgba(0,0,0,0.4)
+      ),
+      url('/autoCarretera.jpg') no-repeat center center fixed;
+    background-size: cover;
+    animation: bgMove 50s linear infinite alternate;
+    color: #8d8d8d;
+}
+
+@keyframes bgMove {
+    0% {
+        background-position: center top;
+    }
+    100% {
+        background-position: center bottom;
+    }
+}

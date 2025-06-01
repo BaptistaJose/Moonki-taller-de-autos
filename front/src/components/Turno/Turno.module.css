@@ -1,0 +1,20 @@
+.containerAppointment{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    width: 75%;
+    height: 100%;
+    margin: auto;
+    border: 1px solid #000000;
+    border-radius: 8px;
+    background-color: rgba(166, 166, 166, 0.85);
+    color: #000000;
+    box-shadow: 0px 0px 6px rgb(0, 0, 0);
+}
+
+.containerAppointment p strong {
+    margin-right: 15px;
+    
+}
