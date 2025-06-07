@@ -1,10 +1,15 @@
-import misTurnos from "../../helpers/myAppointments";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Turno from "../../components/Turno/Turno";
 import styles from "./MisTurnos.module.css";
+import axios from "axios"
 
 const MisTurnos = () => {
-    const [turnos, setTurnos] = useState(misTurnos);
+    const [turnos, setTurnos] = useState([]);
+
+    useEffect(()=>{
+        axios.get("http://localhost:3000/appointments").then(res => setTurnos(res.data)); 
+    },[])
+
     return (
         <div>
         <h1>Mis Turnos</h1>
@@ -14,7 +19,6 @@ const MisTurnos = () => {
                     key={turno.id} 
                     date={turno.date} 
                     time={turno.time} 
-                    userId={turno.userId} 
                     status={turno.status} 
                 />
             ))}
