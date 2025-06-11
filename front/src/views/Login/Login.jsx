@@ -18,6 +18,7 @@ const Login = () => {
                 onSubmit={(values, actions) => {
                     axios.post('http://localhost:3000/users/login', values)
                         .then(res => {
+                            localStorage.setItem("user", JSON.stringify(res.data))
                             alert("Login successful");
                             actions.resetForm();
                         })

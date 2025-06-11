@@ -4,6 +4,7 @@ import Home from './views/Home/Home.jsx';
 import MisTurnos from './views/Mis-Turnos/MisTurnos.jsx';
 import Register from './views/Register/Register.jsx';
 import Login from './views/Login/Login.jsx';
+import { Routes, Route } from 'react-router-dom';
 
 
 function App() {
@@ -11,10 +12,12 @@ function App() {
   return (
     <>
       <NavBar/>
-      {/*Home*/}
-      {<MisTurnos/>}
-      {/*<Register/>*/}
-      {/*<Login/>*/}
+      <Routes>
+        <Route path='/home' element={<Home/>}/>
+        <Route path='/appointments' element={<MisTurnos/>} />
+        <Route path='/register' element={<Register/>} />
+        <Route path='/login' element={<Login/>} />
+      </Routes>
     </>
   )
 }

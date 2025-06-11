@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import styles from './NavBar.module.css';
 
 const NavBar = () => {
@@ -6,11 +7,11 @@ const NavBar = () => {
             <img src="./public/LOGO.png" alt="Logo" className={styles.logo} />
             <nav className={styles.nav}>
                 <ul className={styles.navUl}>
-                    <li><a href="#">Home</a></li>
-                    <li><a href="#">Mis Turnos</a></li>
-                    <li><a href="#">Contact</a></li>
-                    <li><a href="#">Register</a></li>
-                    <li><a href="#">Login</a></li>
+                    <li><Link to="/home">Home</Link></li>
+                    <li><Link to="/appointments">Mis Turnos</Link></li>
+                    <li><Link to="/contact">Contact</Link></li>
+                    <li><Link to="/register">Register</Link></li>
+                    <li><Link to="/login">Login</Link></li>
                 </ul>
             </nav>
         </header>
