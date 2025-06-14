@@ -7,9 +7,8 @@ const NavBar = () => {
             <img src="./public/LOGO.png" alt="Logo" className={styles.logo} />
             <nav className={styles.nav}>
                 <ul className={styles.navUl}>
-                    <li><Link to="/home">Home</Link></li>
+                    <li><Link to="/">Home</Link></li>
                     <li><Link to="/appointments">Mis Turnos</Link></li>
-                    <li><Link to="/contact">Contact</Link></li>
                     <li><Link to="/register">Register</Link></li>
                     <li><Link to="/login">Login</Link></li>
                 </ul>
