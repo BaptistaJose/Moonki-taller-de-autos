@@ -2,8 +2,11 @@ import { Formik, Form, Field, ErrorMessage } from 'formik';
 import axios from 'axios';
 import validateLogin from '../../helpers/validateLogin';
 import styles from './Login.module.css';
+import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
+    const navigate = useNavigate()
+
     const formValues = {
         username: '',
         password: ''
@@ -18,8 +21,9 @@ const Login = () => {
                 onSubmit={(values, actions) => {
                     axios.post('http://localhost:3000/users/login', values)
                         .then(res => {
-                            localStorage.setItem("user", JSON.stringify(res.data))
+                            localStorage.setItem("user", JSON.stringify(res.data.user))
                             alert("Login successful");
+                            navigate("/")
                             actions.resetForm();
                         })
                         .catch(error => {

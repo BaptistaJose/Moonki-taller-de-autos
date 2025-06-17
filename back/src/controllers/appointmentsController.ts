@@ -4,7 +4,8 @@ import { createAppointmentService, getAppointmentByIdService, getAppointmentServ
 
 export const getAppointmentController = async (req: Request, res: Response) =>{
     try {
-        const appointment: IAppointment[] = await getAppointmentServices();
+        const {userId} = req.params
+        const appointment: IAppointment[] = await getAppointmentServices(Number(userId));
         res.status(200).json(appointment)
     } catch (error: any) {
         res.status(404).json({

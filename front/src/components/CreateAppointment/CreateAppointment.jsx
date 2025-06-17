@@ -3,10 +3,8 @@ import axios from 'axios';
 import validateAppointment from '../../helpers/validateAppointment';
 import styles from './appointment.module.css';
 
-const CreateAppointment = () =>{
-    const userString = localStorage.getItem("user");
-    const user = userString ? JSON.parse(userString) : null;
-    const userId = user ? user.id : null;
+const CreateAppointment = ({setUserAppointment}) =>{
+
     return (
         <>
             <h2 className={styles.h2}>Registre un turno</h2>
@@ -16,15 +14,23 @@ const CreateAppointment = () =>{
             date: "",
             time: "",
         }}
+
         validate = {validateAppointment}
+
         onSubmit={(values,actions)=>{
             
+            const userString = localStorage.getItem("user");
+            const user = userString ? JSON.parse(userString) : null;
+            const userId = user ? user.id : null;
+
             const payload ={
                 ...values,
                 userId: userId
             };
 
             axios.post("http://localhost:3000/appointments/schedule", payload).then(res => {
+                console.log(res.data)
+                setUserAppointment(res.data)
                 alert("Turno creado correctamente");
                 actions.resetForm();
             }).catch(err => {

@@ -2,7 +2,7 @@ import { Router } from "express";
 import { cancelAppointmentController, createAppointmentController, getAppointmentByIdController, getAppointmentController } from "../controllers/appointmentsController";
 const appointmentsRoutes: Router = Router();
 
-appointmentsRoutes.get('/', getAppointmentController)
+appointmentsRoutes.get('/:userId', getAppointmentController)
 
 appointmentsRoutes.get('/:id', getAppointmentByIdController)
 

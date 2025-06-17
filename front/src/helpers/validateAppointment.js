@@ -6,8 +6,8 @@ const validateAppointment = ({date, time}) =>{
     } else {
         const today = new Date();
         const selectedDate = new Date(date);
-        if (selectedDate <= today) {
-            errors.date = "La fecha no puede ser anterior a hoy y debe ser un dia hábil";
+        if (selectedDate.getTime() <= today.getTime()) {
+            errors.date = "La fecha no puede ser anterior a hoy y debe ser un dia después del actual";
         }
     }
 
